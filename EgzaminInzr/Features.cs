@@ -1,0 +1,154 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Management;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace EgzaminInzr
+{
+    static class Features
+    {
+        public static  string Hash(DateTime date)
+        {
+            Console.WriteLine(date.ToFileTimeUtc());
+            return GetMD5HashData(GetSHA1HashData((GetMACAddress1() + date.ToFileTimeUtc())));
+        }
+        public static string HashSHA1(DateTime date)
+        {
+            Console.WriteLine(date.ToFileTimeUtc());
+            return GetSHA1HashData((GetMACAddress1() + date.ToFileTimeUtc()));
+        }
+        public static DateTime GetDateFromFile()
+        {
+            DateTime date = new DateTime();
+            try
+            {
+                if(File.Exists("xyz.cnf"))
+                {
+                    string line = File.ReadLines("xyz.cnf").Skip(100).Take(1).First();
+                    date = DateTime.FromFileTimeUtc(long.Parse(GetString(Convert.FromBase64String(line))));
+                    return date;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                System.Windows.Forms.MessageBox.Show("ERROR"+ex.Message);
+            }
+            return date;
+        }
+        public static string GetMACAddress1()
+        {
+            ManagementObjectSearcher objMOS = new ManagementObjectSearcher("Select * FROM Win32_NetworkAdapterConfiguration");
+            ManagementObjectCollection objMOC = objMOS.Get();
+            string macAddress = String.Empty;
+            foreach (ManagementObject objMO in objMOC)
+            {
+                object tempMacAddrObj = objMO["MacAddress"];
+
+                if (tempMacAddrObj == null) //Skip objects without a MACAddress
+                {
+                    continue;
+                }
+                if (macAddress == String.Empty) // only return MAC Address from first card that has a MAC Address
+                {
+                    macAddress = tempMacAddrObj.ToString();
+                }
+                objMO.Dispose();
+            }
+            macAddress = macAddress.Replace(":", "");
+            return macAddress;
+        }
+        public static  bool ValidateMD5HashData(string inputData, string storedHashData)
+        {
+            //hash input text and save it string variable
+            string getHashInputData = GetMD5HashData(storedHashData);
+
+            if (string.Compare(getHashInputData, inputData) == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public static bool ValidateSHA1HashData(string inputData, string storedHashData)
+        {
+            //hash input text and save it string variable
+            string getHashInputData = GetSHA1HashData(inputData);
+
+            if (string.Compare(getHashInputData, storedHashData) == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public static byte[] GetBytes(string str)
+        {
+            byte[] bytes = new byte[str.Length * sizeof(char)];
+            System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
+            return bytes;
+        }
+
+        public static string GetString(byte[] bytes)
+        {
+            char[] chars = new char[bytes.Length / sizeof(char)];
+            System.Buffer.BlockCopy(bytes, 0, chars, 0, bytes.Length);
+            return new string(chars);
+        }
+        public static string GetString2(byte[] bytes)
+        {
+            char[] chars = new char[bytes.Length];
+            System.Buffer.BlockCopy(bytes, 0, chars, 0, bytes.Length);
+            return new string(chars);
+        }
+        public static string GetSHA1HashData(string data)
+        {
+            //create new instance of md5
+            SHA1 sha1 = SHA1.Create();
+
+            //convert the input text to array of bytes
+            byte[] hashData = sha1.ComputeHash(Encoding.Default.GetBytes(data));
+
+            //create new instance of StringBuilder to save hashed data
+            StringBuilder returnValue = new StringBuilder();
+
+            //loop for each byte and add it to StringBuilder
+            for (int i = 0; i < hashData.Length; i++)
+            {
+                returnValue.Append(hashData[i].ToString());
+            }
+
+            // return hexadecimal string
+            return returnValue.ToString();
+        }
+        public static string GetMD5HashData(string data)
+        {
+            //create new instance of md5
+            MD5 md5 = MD5.Create();
+
+            //convert the input text to array of bytes
+            byte[] hashData = md5.ComputeHash(Encoding.Default.GetBytes(data));
+
+            //create new instance of StringBuilder to save hashed data
+            StringBuilder returnValue = new StringBuilder();
+
+            //loop for each byte and add it to StringBuilder
+            for (int i = 0; i < hashData.Length; i++)
+            {
+                returnValue.Append(hashData[i].ToString());
+            }
+
+            // return hexadecimal string
+            return returnValue.ToString();
+
+        }
+    }
+}

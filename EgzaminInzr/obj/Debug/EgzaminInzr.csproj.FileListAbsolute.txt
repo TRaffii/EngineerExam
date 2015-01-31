@@ -1,0 +1,10 @@
+C:\Users\Rafal\Documents\Visual Studio 2012\Projects\EgzaminInzr\EgzaminInzr\bin\Debug\EgzaminInzr.exe
+C:\Users\Rafal\Documents\Visual Studio 2012\Projects\EgzaminInzr\EgzaminInzr\bin\Debug\EgzaminInzr.exe.config
+C:\Users\Rafal\Documents\Visual Studio 2012\Projects\EgzaminInzr\EgzaminInzr\bin\Debug\EgzaminInzr.pdb
+C:\Users\Rafal\Documents\Visual Studio 2012\Projects\EgzaminInzr\EgzaminInzr\obj\Debug\EgzaminInzr.Form1.resources
+C:\Users\Rafal\Documents\Visual Studio 2012\Projects\EgzaminInzr\EgzaminInzr\obj\Debug\EgzaminInzr.Password.resources
+C:\Users\Rafal\Documents\Visual Studio 2012\Projects\EgzaminInzr\EgzaminInzr\obj\Debug\EgzaminInzr.Properties.Resources.resources
+C:\Users\Rafal\Documents\Visual Studio 2012\Projects\EgzaminInzr\EgzaminInzr\obj\Debug\EgzaminInzr.TestResult.resources
+C:\Users\Rafal\Documents\Visual Studio 2012\Projects\EgzaminInzr\EgzaminInzr\obj\Debug\EgzaminInzr.csproj.GenerateResource.Cache
+C:\Users\Rafal\Documents\Visual Studio 2012\Projects\EgzaminInzr\EgzaminInzr\obj\Debug\EgzaminInzr.exe
+C:\Users\Rafal\Documents\Visual Studio 2012\Projects\EgzaminInzr\EgzaminInzr\obj\Debug\EgzaminInzr.pdb
